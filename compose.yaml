@@ -1,0 +1,27 @@
+services:
+  document-bot:
+    build:
+      context: .
+      additional_contexts:
+        hermes_core: ${HERMES_SOURCE:?Set HERMES_SOURCE to the patched checkout}
+    read_only: true
+    user: "10001:10001"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 1g
+    cpus: 1.0
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      - /var/lib/hermes:size=128m,uid=10001,gid=10001,mode=0700
+    volumes:
+      - ./examples/config.yaml:/var/lib/hermes/config.yaml:ro
+      - ./examples/documents.json:/var/lib/hermes/documents.json:ro
+      - ./examples/topic-policy.yaml:/var/lib/hermes/topic-policy.yaml:ro
+      - ./jev-topic-policy:/var/lib/hermes/plugins/jev-topic-policy:ro
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN}
+      TELEGRAM_ALLOWED_USERS: ${TELEGRAM_ALLOWED_USERS:?Set a test user allowlist}
+      TYPESAFE_API_KEY: ${TYPESAFE_API_KEY:?Set TYPESAFE_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?Set the task-model key}
+    restart: "no"

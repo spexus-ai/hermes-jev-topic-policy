@@ -1,0 +1,4 @@
+name: jev-topic-policy
+version: 0.1.0
+description: Required input and output topic gates using the direct TypeSafe Jev API.
+author: local

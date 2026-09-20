@@ -1,0 +1,13 @@
+# Experimental example. Replace scope, build a holdout set, and calibrate before public use.
+version: product-x-v1
+question_version: topic-v1
+calibrated: false
+allowed_scope: >
+  Установка, настройка, использование и устранение ошибок продукта X.
+  Ответы только на основании утверждённой документации продукта.
+prohibited_topics:
+  - Политические предпочтения, агитация и обсуждение текущих выборов.
+thresholds:
+  min_in_scope: 0.95
+  max_prohibited: 0.20
+  max_override: 0.20
